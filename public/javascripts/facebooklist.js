@@ -209,7 +209,7 @@ var TextboxList = Class.create({
 
   makeResizable: function(li) {
     var el = li.retrieveData('input');
-    el.cacheData('resizable', new ResizableTextbox(el, Object.extend(this.options.get('resizable'),{min: el.offsetWidth, max: (this.element.getWidth()?this.element.getWidth():0)})));
+    el.cacheData('resizable', new ResizableTextbox(el, Object.extend(this.options.get('resizable'),{min: el.offsetWidth, max: (this.element.getWidth()?this.element.getWidth():50)})));
     return this;
   },
 
