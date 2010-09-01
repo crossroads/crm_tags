@@ -26,16 +26,6 @@ class TagViewHooks < FatFreeCRM::Callback::Base
           var tagjson = #{ActsAsTaggableOn::Tag.all.map{|t| {"caption" => t.name, "value" => t.name} }.to_json}
           tagjson.each(function(t){fbtaglist.autoFeed(t)});
 EOS
-end
-
-  #----------------------------------------------------------------------------
-  def javascript_includes(view, context = {})
-    includes = ""
-    # Load facebooklist.js for tag input
-    includes << view.javascript_include_tag("/plugin_assets/crm_tags/javascripts/facebooklist.js")
-    # No reason we cant put a stylesheet here too...
-    includes << view.stylesheet_link_tag("/plugin_assets/crm_tags/stylesheets/facebooklist.css")
-    includes
   end
 
   def tags_for_index
@@ -92,10 +82,17 @@ EOS
   end
 
   #----------------------------------------------------------------------------
+  def javascript_includes(view, context = {})
+    # Load facebooklist.js for tag input (No reason we cant put the stylesheet here too...)
+    includes =  view.javascript_include_tag("/plugin_assets/crm_tags/javascripts/facebooklist.js")
+    includes << view.stylesheet_link_tag("/plugin_assets/crm_tags/stylesheets/facebooklist.css")
+  end
+
+  #----------------------------------------------------------------------------
   [ :account, :campaign, :contact, :lead, :opportunity ].each do |model|
 
     define_method :"#{model}_top_section_bottom" do |view, context|
-      Haml::Engine.new(tags_field).render(view, :f => context[:f], :span => (model != :campaign ? 3 : 5))
+      view.render :partial => "/common/tags", :locals => {:f => context[:f], :span => (model != :campaign ? 3 : 5)}
     end
 
     define_method :"#{model}_bottom" do |view, context|
