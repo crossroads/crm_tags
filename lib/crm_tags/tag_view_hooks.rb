@@ -1,8 +1,7 @@
 class TagViewHooks < FatFreeCRM::Callback::Base
 
-  ActsAsTaggableOn::Tag.all
-
-  TAGS_FIELD = <<EOS
+  def tags_field
+<<EOS
 - asset = params[:controller].singularize
 - # Build asset tags manually in case the asset validation failed.
 - if params[asset] && params[asset][:tag_list]
@@ -27,6 +26,7 @@ class TagViewHooks < FatFreeCRM::Callback::Base
           var tagjson = #{ActsAsTaggableOn::Tag.all.map{|t| {"caption" => t.name, "value" => t.name} }.to_json}
           tagjson.each(function(t){fbtaglist.autoFeed(t)});
 EOS
+end
 
   #----------------------------------------------------------------------------
   def javascript_includes(view, context = {})
@@ -38,16 +38,22 @@ EOS
     includes
   end
 
-  TAGS_FOR_INDEX = <<EOS
+  def tags_for_index
+<<EOS
 %dt
   .tags= tags_for_index(model)
+end
 EOS
+  end
 
-  TAGS_FOR_SHOW = <<EOS
+  def tags_for_show
+<<EOS
 .tags(style="margin:4px 0px 4px 0px")= tags_for_show(model)
 EOS
-
-  TAGS_STYLES = <<EOS
+  end
+  
+  def tags_styles
+<<EOS
 .tags, .list li dt .tags
   a:link, a:visited
     :background lightsteelblue
@@ -60,8 +66,10 @@ EOS
     :background steelblue
     :color yellow
 EOS
+end
 
-  TAGS_JAVASCRIPT = <<EOS
+  def tags_javascript
+<<EOS
 crm.search_tagged = function(query, controller) {
   if ($('query')) {
     $('query').value = query;
@@ -71,33 +79,34 @@ crm.search_tagged = function(query, controller) {
 // Assign var fbtaglist, so we can acess it throughout the DOM.
 var fbtaglist = null;
 EOS
-
+  end
+  
   #----------------------------------------------------------------------------
   def inline_styles(view, context = {})
-    Sass::Engine.new(TAGS_STYLES).render
+    Sass::Engine.new(tags_styles).render
   end
 
   #----------------------------------------------------------------------------
   def javascript_epilogue(view, context = {})
-    TAGS_JAVASCRIPT
+    tags_javascript
   end
 
   #----------------------------------------------------------------------------
   [ :account, :campaign, :contact, :lead, :opportunity ].each do |model|
 
     define_method :"#{model}_top_section_bottom" do |view, context|
-      Haml::Engine.new(TAGS_FIELD).render(view, :f => context[:f], :span => (model != :campaign ? 3 : 5))
+      Haml::Engine.new(tags_field).render(view, :f => context[:f], :span => (model != :campaign ? 3 : 5))
     end
 
     define_method :"#{model}_bottom" do |view, context|
       unless context[model].tag_list.empty?
-        Haml::Engine.new(TAGS_FOR_INDEX).render(view, :model => context[model])
+        Haml::Engine.new(tags_for_index).render(view, :model => context[model])
       end
     end
 
     define_method :"show_#{model}_sidebar_bottom" do |view, context|
       unless context[model].tag_list.empty?
-        Haml::Engine.new(TAGS_FOR_SHOW).render(view, :model => context[model])
+        Haml::Engine.new(tags_for_show).render(view, :model => context[model])
       end
     end
 
