@@ -4,7 +4,6 @@ class TagViewHooks < FatFreeCRM::Callback::Base
 <<EOS
 %dt
   .tags= tags_for_index(model)
-end
 EOS
   end
 
