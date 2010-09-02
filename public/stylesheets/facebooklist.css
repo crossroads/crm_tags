@@ -35,7 +35,9 @@ ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutt
 #button_container { margin-left: 70px; margin-bottom: 30px;}
 
 /* Fixes for FFCRM */
-#facebook-list { margin: 0; background-color: white; margin-bottom: 18px; }
+#facebook-list { margin: 0 0 18px; background-color: white; }
 #facebook-list li { border-bottom: 0; clear: none; }
 ul.holder li { padding: 0; }
+
+.facebook-tags { padding: 0; margin: 0; }
 
