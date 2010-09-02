@@ -1,33 +1,5 @@
 class TagViewHooks < FatFreeCRM::Callback::Base
 
-  def tags_field
-<<EOS
-- asset = params[:controller].singularize
-- # Build asset tags manually in case the asset validation failed.
-- if params[asset] && params[asset][:tag_list]
-  - f.object.tags = params[asset][:tag_list].split(",").map {|x| ActsAsTaggableOn::Tag.find_by_name(x.strip)}.compact.uniq
-%tr
-  %td{ :valign => :top, :colspan => span }
-    .label.req Tags: <small>(comma separated, letters and digits only)</small>
-    %dd#facebook-list
-      = f.text_field :tag_list, :id => "tag_list", :style => "width:500px", :autocomplete => "off"
-      #facebook-auto
-        .default Type the name of a tag you'd like to use.  Use commas to separate multiple tags.
-        %ul.feed
-          - # Get tags from either the unsaved params, or from the object.
-          - tags = (params[asset] && params[asset][:tag_list]) ? params[asset][:tag_list].split(",") : f.object.tags.map{|t| t.name }
-          - tags.each do |tag|
-            %li{ :value => tag }= tag
-        :javascript
-          fbtaglist = new FacebookList('tag_list', 'facebook-auto',
-                                      { newValues: true,
-                                        regexSearch: false,
-                                        separator: Event.KEY_COMMA });
-          var tagjson = #{ActsAsTaggableOn::Tag.all.map{|t| {"caption" => t.name, "value" => t.name} }.to_json}
-          tagjson.each(function(t){fbtaglist.autoFeed(t)});
-EOS
-  end
-
   def tags_for_index
 <<EOS
 %dt
@@ -41,7 +13,7 @@ EOS
 .tags(style="margin:4px 0px 4px 0px")= tags_for_show(model)
 EOS
   end
-  
+
   def tags_styles
 <<EOS
 .tags, .list li dt .tags
@@ -70,7 +42,7 @@ crm.search_tagged = function(query, controller) {
 var fbtaglist = null;
 EOS
   end
-  
+
   #----------------------------------------------------------------------------
   def inline_styles(view, context = {})
     Sass::Engine.new(tags_styles).render
