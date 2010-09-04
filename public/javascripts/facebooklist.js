@@ -60,7 +60,8 @@ var TextboxList = Class.create({
       maxResults: 0, // 0 = set to default (which is 10 (see FacebookList class)),
       wordMatch: false,
       onEmptyInput: function(input){},
-      onChange: function(){},
+      onAdd: function(tag){},
+      onDispose: function(tag){},
       caseSensitive: false,
       regexSearch: true
     });
@@ -129,7 +130,7 @@ var TextboxList = Class.create({
     // Dynamic updating... why not?
     this.update();
     if(this.options.get('extrainputs') && (this.options.get('startinput') || el.previous())) this.addSmallInput(el,'before');
-    this.options.get('onChange')();
+    this.options.get('onAdd')(text.value);
     return el;
   },
 
@@ -143,6 +144,7 @@ var TextboxList = Class.create({
   },
 
   dispose: function(el) {
+    this.options.get('onDispose')(this.bits.get(el.id));
     this.bits.unset(el.id);
     // Dynamic updating... why not?
     this.update();
@@ -150,7 +152,6 @@ var TextboxList = Class.create({
     if(this.current == el) this.focus(el.next());
     if(el.retrieveData('type') == 'box') el.onBoxDispose(this);
     el.remove();
-    this.options.get('onChange')();
     return this;
   },
 
@@ -522,7 +523,6 @@ var FacebookList = Class.create(TextboxList, {
       e.stop();
       if(! this.current) this.focus(this.maininput);
       this.dispose(li);
-      this.options.get('onChange')();
     }.bind(this));
     li.insert(a).cacheData('text', Object.toJSON(text));
     return li;
