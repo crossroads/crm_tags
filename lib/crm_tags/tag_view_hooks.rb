@@ -37,8 +37,19 @@ crm.search_tagged = function(query, controller) {
   }
   crm.search(query, controller);
 }
+
 // Assign var fbtaglist, so we can acess it throughout the DOM.
 var fbtaglist = null;
+
+/* Override the 'hide_form' function, to remove any duplicate 'facebook-list' elements
+   before running the 'BlindUp' effect. (The disappearing facebook-list takes precedence over
+   the newly created facebook-list that is being AJAX loaded, and messes up the initialization.. ) */
+crm.hide_form = function(id) {
+    if($('facebook-list')) $('facebook-list').remove();
+    var arrow = $(id + "_arrow") || $("arrow");
+    arrow.update(this.COLLAPSED);
+    Effect.BlindUp(id, { duration: 0.25, afterFinish: function() { $(id).update("") } });
+}
 EOS
   end
 
