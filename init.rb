@@ -1,6 +1,6 @@
 require "fat_free_crm"
 
-FatFreeCRM::Plugin.register(:crm_sample_tabs, initializer) do
+FatFreeCRM::Plugin.register(:crm_sample_tabs, self) do
           name "Fat Free CRM Tags"
        authors "Michael Dvorkin, Jose Luis Gordo Romero"
        version "0.2"
