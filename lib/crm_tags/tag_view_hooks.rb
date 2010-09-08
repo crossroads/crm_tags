@@ -66,8 +66,8 @@ EOS
   #----------------------------------------------------------------------------
   def javascript_includes(view, context = {})
     # Load facebooklist.js for tag input (No reason we cant put the stylesheet here too...)
-    includes =  view.javascript_include_tag("/plugin_assets/crm_tags/javascripts/facebooklist.js")
-    includes << view.stylesheet_link_tag("/plugin_assets/crm_tags/stylesheets/facebooklist.css")
+    includes =  view.javascript_include_tag('facebooklist.js')
+    includes << view.stylesheet_link_tag('facebooklist.css')
   end
 
   #----------------------------------------------------------------------------

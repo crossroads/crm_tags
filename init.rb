@@ -10,3 +10,4 @@ end
 
 require "crm_tags"
 
+Rails.configuration.middleware.use ::ActionDispatch::Static, "#{root}/public"
