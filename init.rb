@@ -10,4 +10,4 @@ end
 
 require "crm_tags"
 
-Rails.configuration.middleware.use ::ActionDispatch::Static, "#{root}/public"
+Rails.configuration.middleware.insert_before ::Rack::Lock, ::ActionDispatch::Static, "#{root}/public"
