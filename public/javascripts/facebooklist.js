@@ -130,7 +130,7 @@ var TextboxList = Class.create({
     // Dynamic updating... why not?
     this.update();
     if(this.options.get('extrainputs') && (this.options.get('startinput') || el.previous())) this.addSmallInput(el,'before');
-    this.options.get('onAdd')(text.value);
+    this.options.get('onAdd')(text.value, el);
     return el;
   },
 
