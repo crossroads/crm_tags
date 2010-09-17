@@ -48,7 +48,7 @@ crm.hide_form = function(id) {
     if($('facebook-list')) $('facebook-list').remove();
     var arrow = $(id + "_arrow") || $("arrow");
     arrow.update(this.COLLAPSED);
-    Effect.BlindUp(id, { duration: 0.25, afterFinish: function() { $(id).update("") } });
+    Effect.BlindUp(id, { duration: 0.25, afterFinish: function() { $(id).update("").setStyle({height: 'auto'}); } });
 }
 EOS
   end
