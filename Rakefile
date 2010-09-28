@@ -1,17 +1,10 @@
+# Add your own tasks in files placed in lib/tasks ending in .rake,
+# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
+
+require File.expand_path('../../../../config/application', __FILE__)
 require 'rake'
-require 'rake/testtask'
-require 'rake/rdoctask'
 
-desc 'Default: run unit tests.'
-task :default => :test
-
-desc 'Test the crm_tags plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
+FatFreeCrm::Application.load_tasks
 
 desc 'Generate documentation for the crm_tags plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
