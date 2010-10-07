@@ -1,8 +1,5 @@
 - asset = params[:controller].singularize
-- is_unsaved_object = params[asset] && params[asset][:tag_list]
-- # Build asset tags manually if the asset validation failed.
-- if is_unsaved_object
-  - f.object.tags = params[asset][:tag_list].split(",").map {|x| ActsAsTaggableOn::Tag.find_by_name(x.strip)}.compact.uniq
+- f.object.tags = unsaved_param_tags(asset) if params[asset] && params[asset][:tag_list]
 %tr
   %td{ :valign => :top, :colspan => span }
     .label.req Tags: <small>(comma separated, letters and digits only)</small>
@@ -12,9 +9,8 @@
         #facebook-auto
           .default Type the name of a tag you'd like to use.  Use commas to separate multiple tags.
           %ul.feed
-            - # Get tags from either the unsaved params, or from the object.
-            - tags = is_unsaved_object ? params[asset][:tag_list].split(",") : f.object.tags.map{|t| t.name }
-            - tags.each do |tag|
+            - # Get tags from the object.
+            - f.object.tags.map{|t| t.name }.each do |tag|
               %li{ :value => tag }= tag
           :javascript
             fbtaglist = new FacebookList('tag_list', 'facebook-auto',

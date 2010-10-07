@@ -3,4 +3,5 @@ require "crm_tags/controller_actions"   # Inject :tagged controller instance met
 require "crm_tags/tag_view_helpers"     # Inject tag formatting helpers.
 require "crm_tags/controller_hooks"     # Define controller hooks to be able to search assets by tag.
 require "crm_tags/tag_view_hooks"       # Define view hooks that provide tag support in views.
+require "crm_tags/helpers"              # Inject helper methods for views.
 
