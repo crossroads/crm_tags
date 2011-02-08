@@ -85,7 +85,7 @@ class ControllerHooks < FatFreeCRM::Callback::Base
   #----------------------------------------------------------------------------
   def parse_query_and_tags(search_string)
     query, tags = [], []
-    search_string.scan(/[\w#]+/).each do |token|
+    search_string.scan(/[\w@\-\.'#]+/).each do |token|
       if token.starts_with?("#")
         tags << token[1 .. -1]
       else
@@ -96,3 +96,4 @@ class ControllerHooks < FatFreeCRM::Callback::Base
   end
 
 end
+
