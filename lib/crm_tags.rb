@@ -5,3 +5,5 @@ require "crm_tags/controller_hooks"     # Define controller hooks to be able to 
 require "crm_tags/tag_view_hooks"       # Define view hooks that provide tag support in views.
 require "crm_tags/helpers"              # Inject helper methods for views.
 
+include ActsAsTaggableOn
+
