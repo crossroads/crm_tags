@@ -16,8 +16,6 @@ Installation
    plugin which must be installed as follows:
 
     rails plugin install git://github.com/mbleigh/acts-as-taggable-on.git
-    rails generate acts_as_taggable_on_migration
-    rake db:migrate
 
 2) Install the tags plugin:
 
