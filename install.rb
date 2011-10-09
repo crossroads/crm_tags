@@ -1,4 +1,7 @@
 # Install hook code here
+puts "== Copying assets to public/"
+`cp -r vendor/plugins/crm_tags/public/* public/`
+
 puts <<-EOS
 The Tags adds tagging support to all major Fat Free CRM models. To search by tag enter its
 name prefixed by # character. For example:

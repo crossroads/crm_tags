@@ -19,13 +19,16 @@ Installation
 
    Then run `bundle install`
 
+
 2) Install the tags plugin:
 
     rails plugin install git://github.com/crossroads/tags.git
 
-3) Run the plugin migrations:
+
+4) Run the plugin migrations:
 
     rake db:migrate:plugins
 
-4) Restart your web server.
+
+5) Restart your web server.
 
