@@ -7,9 +7,13 @@ name prefixed by # character. For example:
 
 In this example "hello" is regular search string, and "world" is a tag.
 
-The Tags plugin depends on the [acts-as-taggable-on] plugin which must be installed as follows:
+The tags plugin depends on the acts-as-taggable-on gem.
+Add this line to the bottom of your Gemfile:
 
-    rails plugin install git://github.com/mbleigh/acts-as-taggable-on.git
+    gem 'acts-as-taggable-on', '>= 2.0.6'
+
+
+Then run `bundle install`
 
 EOS
 
