@@ -1,4 +1,4 @@
-Tags plugin for Fat Free CRM
+Tags plugin for Fat Free CRM - DEPRICATED only works on rails238 branch (now in core)
 ============================
 
 The Tags adds tagging support to all major Fat Free CRM models. To search by tag enter its
